@@ -61,9 +61,7 @@ MODEL_CLASSES = {
     "auto": (AutoConfig, AutoModel, AutoTokenizer),
     "bart": (BartConfig, BartForConditionalGeneration, BartTokenizer),
     "bert": (BertConfig, BertModel, BertTokenizer),
-    "roberta": (RobertaConfig, RobertaModel, RobertaTokenizer),
-    # "blender": (BlenderbotSmallConfig, BlenderbotSmallForConditionalGeneration, BlenderbotSmallTokenizer),
-    # "blender-large": (BlenderbotConfig, BlenderbotForConditionalGeneration, BlenderbotTokenizer)
+
 }
 
 
@@ -157,22 +155,7 @@ class Seq2SeqModel:
             config_class, model_class, tokenizer_class = MODEL_CLASSES[encoder_decoder_type]
         else:
             config_class, model_class, tokenizer_class = MODEL_CLASSES[encoder_type]
-        '''
-        原先的代码
-        if encoder_decoder_type in ["bart", "marian", "blender", "blender-large"]:
-            self.model = model_class.from_pretrained(encoder_decoder_name)
-            if encoder_decoder_type in ["bart", "blender", "blender-large"]:
-                self.encoder_tokenizer = tokenizer_class.from_pretrained(encoder_decoder_name)
-                # self.encoder_tokenizer = tokenizer_class.from_pretrained(encoder_decoder_name, additional_special_tokens=['__defi__', '__sim__'])
-                # self.model.resize_token_embeddings(len(self.encoder_tokenizer))
-            elif encoder_decoder_type == "marian":
-                if self.args.base_marian_model_name:
-                    self.encoder_tokenizer = tokenizer_class.from_pretrained(self.args.base_marian_model_name)
-                else:
-                    self.encoder_tokenizer = tokenizer_class.from_pretrained(encoder_decoder_name)
-            self.decoder_tokenizer = self.encoder_tokenizer
-            self.config = self.model.config
-            '''
+        
         if encoder_decoder_type in ["bart"]:
             self.model = model_class.from_pretrained(encoder_decoder_name)
             TokenModel = "bert-base-chinese"
